@@ -1,14 +1,12 @@
 import { Controller, Get } from '@nestjs/common';
+import { CustomersService } from './customers.service';
 
 @Controller('customers')
 export class CustomersController {
+  constructor(private customerService: CustomersService) {}
+
   @Get('')
   getCustomer() {
-    return {
-      id: 1,
-      name: 'John Doe',
-      email: 'jdoe@gmail.com',
-      createdAt: new Date(),
-    };
+    return this.customerService.findCustomer();
   }
 }
