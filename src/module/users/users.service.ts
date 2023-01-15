@@ -65,4 +65,9 @@ export class UsersService {
     });
     return this.userRepository.save(newUser);
   }
+
+  async findUser(email: string) {
+    const user = await this.userRepository.findOne({ where: { email } });
+    return user;
+  }
 }
