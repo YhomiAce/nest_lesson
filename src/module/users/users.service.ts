@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { plainToClass } from 'class-transformer';
 import { User as UserModel } from 'src/typeorm';
+import { encodePassword } from 'src/utils/bcrypt';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/createUser.dto';
 import { User } from './types/User';
@@ -57,11 +58,12 @@ export class UsersService {
     return this.users.find((where) => where.id === id);
   }
 
-  createUser(createUserDto: CreateUserDto) {
+  async createUser(createUserDto: CreateUserDto) {
+    const password = encodePassword(createUserDto.password);
     const newUser = this.userRepository.create({
       email: createUserDto.email,
       username: createUserDto.username,
-      password: createUserDto.password,
+      password,
     });
     return this.userRepository.save(newUser);
   }
@@ -70,4 +72,8 @@ export class UsersService {
     const user = await this.userRepository.findOne({ where: { email } });
     return user;
   }
+
+  findAUserById = async (id: number) => {
+    return await this.userRepository.findOneBy({ id });
+  };
 }
