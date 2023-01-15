@@ -27,12 +27,12 @@ export class CustomersController {
 
   @Get(':id')
   async getCustomerById(@Req() req: Request, @Res() res: Response) {
-    console.log(req.params.id);
+    // console.log(req.params.id);
 
     const customer = await this.customerService.findCustomerById(
       Number(req.params.id),
     );
-    console.log(customer);
+    // console.log(customer);
     if (customer) {
       return res.status(200).send(customer);
     } else {

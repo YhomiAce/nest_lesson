@@ -37,7 +37,7 @@ export class CustomersService {
 
   findCustomerById = async (id: number) => {
     const customer = this.customers.find((where) => where.id === id);
-    console.log(customer);
+    // console.log(customer);
     return customer;
   };
 
